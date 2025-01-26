@@ -1,6 +1,6 @@
 import "package:bigthing/common/widgets/button.dart";
 import "package:bigthing/common/widgets/textfield.dart";
-import "package:bigthing/constants/global.dart";
+import "package:bigthing/features/auth/services/auth_service.dart";
 import "package:flutter/material.dart";
 
 class AuthScr extends StatefulWidget{
@@ -19,6 +19,24 @@ class _AuthScrState extends State<AuthScr> {
   final TextEditingController _emailContr = TextEditingController();
   final TextEditingController _passContr = TextEditingController();
   final TextEditingController _nameContr = TextEditingController();
+  
+  final AuthService authService = AuthService();
+  void signupuser(){
+    authService.signUp(
+      context: context,
+      email: _emailContr.text,
+      password: _passContr.text,
+      name: _nameContr.text,
+    );
+  }
+
+  void signinuser(){
+    authService.signIn(
+      context: context, 
+      email: _emailContr.text, 
+      password: _passContr.text
+    );
+  }
 
  @override
   void dispose() {
@@ -80,7 +98,13 @@ class _AuthScrState extends State<AuthScr> {
                                   const SizedBox(height: 10,),
                                   CustomTextField(controller:_passContr,hinttext: 'Password',),
                                   const SizedBox(height: 10,),
-                                  CustomButton(text: 'Sign Up', onTap:(){})
+                                  CustomButton(
+                                    text: 'Sign Up', 
+                                    onTap:(){
+                                      if (_signupKey.currentState!.validate()) {
+                                        signupuser();
+                                      }
+                                    })
                                 ],
                               ),
                             )
@@ -92,7 +116,14 @@ class _AuthScrState extends State<AuthScr> {
                                   const SizedBox(height: 10,),
                                   CustomTextField(controller:_passContr,hinttext: 'Password',),
                                   const SizedBox(height: 10,),
-                                  CustomButton(text: 'Sign In', onTap:(){})
+                                  CustomButton(
+                                    text: 'Sign In', 
+                                    onTap:(){
+                                      if (_signuinKey.currentState!.validate()) {
+                                        signinuser();
+                                      }
+                                    }
+                                  )
                                 ],
                               ),
                             ),
